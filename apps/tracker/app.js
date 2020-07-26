@@ -383,10 +383,9 @@ function start() {
 
 
 function sendData(){
-NRF.setServices({
+NRF.updateServices({
   0xBCDE : {
     0xABCD : {
-      readable: true,
       value: finalDataString
   }
 }
@@ -426,7 +425,14 @@ Bangle.loadWidgets();
 Bangle.drawWidgets();
 drawBackground();
 draw();
-
+NRF.setServices({
+  0xBCDE : {
+    0xABCD : {
+      readable: true,
+      value: finalDataString
+  }
+}
+});
 setInterval(draw, 500);
 setInterval(storeData, 5000);
 
