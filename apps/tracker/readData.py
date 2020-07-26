@@ -1,5 +1,6 @@
 import asyncio
 import array
+import json
 from bleak import discover
 from bleak import *
 
@@ -13,6 +14,8 @@ command = b"\x03\x10print(require('Storage').readJSON('track.d',true))\n"
 
 def uart_data_received(sender, data):
     print(data.decode("utf-8"))
+    with open('activity.json', 'w') as json_file:
+        json.dump(data.decode("utf-8"), json_file)
 
 #You can scan for devices with:
 async def run1():
