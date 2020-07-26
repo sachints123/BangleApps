@@ -13,9 +13,9 @@ command = b"\x03\x10print(require('Storage').readJSON('track.d',true))\n"
 #command = "\x03\x10var f = require('Storage')\n\x10 print(f.list())\n\x10print(f.readLine())\n"
 
 def uart_data_received(sender, data):
-    print(data.decode("utf-8"))
-    with open('activity.json', 'w') as json_file:
-        json.dump(data.decode("utf-8"), json_file)
+    file = open('activity.json', 'a')
+    file.write(data.decode("utf-8"))
+    file.close()
 
 #You can scan for devices with:
 async def run1():
