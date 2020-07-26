@@ -10,18 +10,20 @@ UUID_NORDIC_RX = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
 #command = b"\x03\x10clearInterval()\n\x10setInterval(function() {require(\"Storage\").read(\"43815937\"),500)});\n"
 #command = b"\x03\x10var f = require('Storage').open('walking','r')\n\x10print(f.read(10000))\n"
 command = b"\x03\x10print(require('Storage').readJSON('track.d',true))\n"
-#command = "\x03\x10var f = require('Storage')\n\x10 print(f.list())\n\x10print(f.readLine())\n"
+#command = b"\x03\x10print(finalDataString)\n"
 
 def uart_data_received(sender, data):
+    print(data.decode("utf-8"))
     file = open('activity.json', 'a')
     file.write(data.decode("utf-8"))
     file.close()
-
+    
+ 
 #You can scan for devices with:
 async def run1():
     devices = await discover()
     for d in devices:
-         print(d)
+        print(d)
 
 # print("Connecting...")
 async def run(address, loop):
@@ -42,8 +44,7 @@ async def run(address, loop):
         await client.disconnect()
 
 
-
 #
 loop = asyncio.get_event_loop()
 loop.run_until_complete(run(address, loop))
-#loop.run_until_complete(run())
+
