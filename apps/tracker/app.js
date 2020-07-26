@@ -407,7 +407,6 @@ function stop() {
   pressButtonTwo = true;
   storeFinalActivityData();
   storeInFile();
-  //sendData();
 }
 
 
