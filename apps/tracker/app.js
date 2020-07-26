@@ -407,7 +407,7 @@ function stop() {
   pressButtonTwo = true;
   storeFinalActivityData();
   storeInFile();
-  sendData();
+  #sendData();
 }
 
 
@@ -437,5 +437,6 @@ setInterval(draw, 500);
 setInterval(storeData, 5000);
 
 setWatch(start, BTN1, { repeat: true });
+setWatch(sendData,BTN2,{ repeat: true });
 setWatch(stop, BTN3, { repeat: true });
 
