@@ -1,4 +1,3 @@
-
 /** Global constants */
 const DEG_TO_RAD = Math.PI / 180;
 const EARTH_RADIUS = 6371008.8;
@@ -328,6 +327,7 @@ function storeInFile() {
     console.log(now);
       //Math.ceil(Math.random() * 1000).toString() + now.getTime().toString();
     console.log('filename', filename); //new file for each day
+    
     //file.writeJSON(filename,activity);
     file.writeJSON(filename,dataArray);
     canPressTwo = false;
@@ -349,7 +349,8 @@ function detectActivity() {
 function storeFinalActivityData() {
   var avgHr = (totHr/totTime)*60;
   avgPace = totTime/totDist;
-  finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence};
+  activityType = totCadence <= 130 ? 'Walking':'Running';
+  finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence, activity: activityType};
   finalDataString = JSON.stringify(finalData);
 }
 
@@ -368,30 +369,25 @@ function drawActivityStopped() {
   }
 }
 
-function drawSent(){
-  g.setFontAlign(-1, -1, 0);
-    g.setColor(250, 0, 0);
-    g.drawString('Detected Device pixel', 2, 10);
-}
-
 function start() {
   running = true;
   drawBackground();
   draw();
   drawActivityStarted();
+  setInterval(storeData, 5000);
 }
 
 
 function sendData(){
-NRF.updateServices({
+NRF.setServices({
   0xBCDE : {
     0xABCD : {
+      readable: true,
       value: finalDataString
   }
 }
 });
 }
-
 
 function stop() {
   if (!running) {
@@ -407,10 +403,8 @@ function stop() {
   pressButtonTwo = true;
   storeFinalActivityData();
   storeInFile();
+  clearInterval(storeData);
 }
-
-
-
 
 Bangle.on('GPS', handleGps);
 Bangle.on('HRM', handleHrm);
@@ -424,18 +418,10 @@ Bangle.loadWidgets();
 Bangle.drawWidgets();
 drawBackground();
 draw();
-NRF.setServices({
-  0xBCDE : {
-    0xABCD : {
-      readable: true,
-      value: finalDataString
-  }
-}
-});
+
 setInterval(draw, 500);
-setInterval(storeData, 5000);
+
 
 setWatch(start, BTN1, { repeat: true });
-setWatch(sendData,BTN2,{ repeat: true });
 setWatch(stop, BTN3, { repeat: true });
-
+setWatch(sendData, BTN2, {repeat: true});
