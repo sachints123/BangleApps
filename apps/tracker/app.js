@@ -349,7 +349,7 @@ function detectActivity() {
 
 function storeFinalActivityData() {
   var avgHr = (totHr/totTime);
-  avgPace = totTime/totDist;
+  avgPace = totTime === 0 || totDist === 0 ? 0 : totTime/totDist;
   finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence, activity:activity};
   finalDataString = JSON.stringify(finalData);
 }
