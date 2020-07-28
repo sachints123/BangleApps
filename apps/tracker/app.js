@@ -340,9 +340,9 @@ function storeInFile() {
 function detectActivity() {
   if(totCadence > 0) {
     if(totCadence <= 130 ) {
-      activity = 'walking';
+      activity = 'Walking';
     } else {
-      activity = 'running';
+      activity = 'Running';
    }
   }
 }
@@ -350,8 +350,7 @@ function detectActivity() {
 function storeFinalActivityData() {
   var avgHr = (totHr/totTime);
   avgPace = totTime/totDist;
-  activityType = totCadence <= 130 ? 'Walking':'Running';
-  finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence, activity: activityType};
+  finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence, activity:activity};
   finalDataString = JSON.stringify(finalData);
 }
 
