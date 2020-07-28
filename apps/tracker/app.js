@@ -292,6 +292,7 @@ function handleGps(coords) {
 function handleHrm(hrm) {
   hrmReady = hrm.confidence > 50;
   heartRate = hrm.bpm;
+  totHr += heartRate;
 }
 
 function handleStep() {
@@ -347,7 +348,7 @@ function detectActivity() {
 }
 
 function storeFinalActivityData() {
-  var avgHr = (totHr/totTime)*60;
+  var avgHr = (totHr/totTime);
   avgPace = totTime/totDist;
   activityType = totCadence <= 130 ? 'Walking':'Running';
   finalData = {steps: totSteps, time: totTime, distance:totDist, AverageHR: avgHr, Pace: avgPace,cadence: totCadence, activity: activityType};
