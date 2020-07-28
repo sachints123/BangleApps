@@ -374,7 +374,7 @@ function start() {
   drawBackground();
   draw();
   drawActivityStarted();
-  setInterval(storeData, 5000);
+  
 }
 
 
@@ -403,7 +403,6 @@ function stop() {
   pressButtonTwo = true;
   storeFinalActivityData();
   storeInFile();
-  clearInterval(storeData);
 }
 
 Bangle.on('GPS', handleGps);
@@ -420,7 +419,7 @@ drawBackground();
 draw();
 
 setInterval(draw, 500);
-
+setInterval(storeData, 5000);
 
 setWatch(start, BTN1, { repeat: true });
 setWatch(stop, BTN3, { repeat: true });
